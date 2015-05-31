@@ -2,20 +2,32 @@ __author__ = 'Yann.Xia'
 
 import math
 
-factorial_lst = []
 
-for i in range(0, 10):
-    factorial_lst.append(math.factorial(i))
+def is_palindromes_decimal(num):
+    n = num
+    power = 0
+    while num > 0:
+        power *= 10
+        power += num % 10
+        num = int(num / 10)
+    if power == n:
+        return True
+    return False
 
-all_sum = 0
-for i in range(145, 999999):
-    i_sum = 0
-    n = i
-    while n > 0:
-        j = n % 10
-        i_sum += factorial_lst[j]
-        n = int(n / 10)
-    if i_sum == i:
-        print(i_sum)
-        all_sum += i_sum
-print(all_sum)
+def is_palindromes_binary(num):
+    n = num
+    power = 0
+    while num > 0:
+        power *= 2
+        power += num % 2
+        num = int(num / 2)
+    if power == n:
+        return True
+    return False
+
+s = 0
+for i in range(1, 1000000):
+    if is_palindromes_decimal(i) and is_palindromes_binary(i):
+        s += i
+
+print(s)
