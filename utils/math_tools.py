@@ -1,6 +1,31 @@
 __author__ = 'Yann'
 
 
+def find_less_n_primes(n):
+    # init primes to [0 ... n]
+    primes = []
+    for i in range(0, n):
+        primes.append(i)
+    # Find all primes
+    i = 2
+    while i != 0 and n > i:
+        j = i + i
+        while j < n:
+            primes[j] = 0
+            j += i
+        # Find next not null number
+        i += 1
+        while i < n and primes[i] == 0:
+            i += 1
+    primes[1] = 0
+    s = set(primes)
+    primes = list(s)
+    primes.remove(0)
+    primes = sorted(primes)
+
+    return primes
+
+
 def is_integer(n):
     n = str(n)
     ns = n.split('.')
@@ -35,4 +60,22 @@ def is_pandigital(x):
 
     if count == len(x_char_set):
         return True
+    return False
+
+
+def is_dived_by_primes(n:int, primes:list, counters:int):
+    i = 0
+    counter = 0
+    divied = 0
+    while i < len(primes):
+        while n % primes[i] == 0:
+            n = int(n / primes[i])
+            if primes[i] != divied:
+                counter += 1
+                divied = primes[i]
+        if n == 1 and counters == counter:
+            return True
+        if n < primes[i] and counter > counters:
+            break
+        i += 1
     return False

@@ -23,7 +23,6 @@ while n < size - 1:
         counter += 1
         current_val += primes[i]
 
-        # 这里很重要，减少耗时操作
         if counter < max_counter:
             continue
 
