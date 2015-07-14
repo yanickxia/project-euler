@@ -1,5 +1,49 @@
 __author__ = 'Yann'
 
+import random
+
+
+def is_prime(n, random_cycle):
+    src_n = n
+    n, i = n - 1, 0
+    random_cycle = random_cycle
+
+    while n % 2 == 0:
+        n /= 2
+        i += 1
+    m, q = int(n), i
+    s = q
+
+    a = random.randint(2, src_n - 2)
+    x = a ** m
+
+    while random_cycle > 0:
+        x = (x * x)
+        d = x % src_n
+        if d == 1 and x != src_n - 1 and x != 1:
+            return False
+        random_cycle -= 1
+    return True
+
+
+
+def find_less_n_primes_bools(n):
+    primes = [1] * (n + 1)
+
+    i = 2
+    while n > i:
+        j = i + i
+        while j < n:
+            primes[j] = 0
+            j += i
+        # find next not 0 number
+        i += 1
+        while i < n and primes[i] == 0:
+            i += 1
+    primes[0] = 0
+    primes[1] = 0
+    return primes
+
 
 def find_less_n_primes(n):
     # init primes to [0 ... n]
