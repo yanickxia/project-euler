@@ -26,7 +26,6 @@ def is_prime(n, random_cycle):
     return True
 
 
-
 def find_less_n_primes_bools(n):
     primes = [1] * (n + 1)
 
@@ -91,6 +90,10 @@ def gen_pandigital_numbers(numbers:list, number:str, gen_numbers:list):
         gen_pandigital_numbers(copy_numbers, copy_number, gen_numbers)
 
     return gen_numbers
+
+
+def isPalindrome(n):
+    return str(n)[::-1] == str(n)
 
 
 def is_pandigital(x):
