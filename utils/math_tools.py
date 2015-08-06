@@ -3,7 +3,27 @@ __author__ = 'Yann'
 import random
 
 
+def is_prime_slow(n):
+    if n == 2 or n == 3: return True
+    if n < 2 or n % 2 == 0: return False
+    if n < 9: return True
+    if n % 3 == 0: return False
+    r = int(n ** 0.5)
+    f = 5
+    while f <= r:
+        if n % f == 0: return False
+        if n % (f + 2) == 0: return False
+        f += 6
+    return True
+
+
 def is_prime(n, random_cycle):
+    if n == 1 or n == 3:
+        return True
+
+    if n == 2:
+        return False
+
     src_n = n
     n, i = n - 1, 0
     random_cycle = random_cycle
@@ -77,7 +97,7 @@ def is_integer(n):
     return ns[1] == '0'
 
 
-def gen_pandigital_numbers(numbers:list, number:str, gen_numbers:list):
+def gen_pandigital_numbers(numbers: list, number: str, gen_numbers: list):
     if numbers == []:
         gen_numbers.append(int(number))
         return
@@ -110,7 +130,7 @@ def is_pandigital(x):
     return False
 
 
-def is_dived_by_primes(n:int, primes:list, counters:int):
+def is_dived_by_primes(n: int, primes: list, counters: int):
     i = 0
     counter = 0
     divied = 0
@@ -126,3 +146,40 @@ def is_dived_by_primes(n:int, primes:list, counters:int):
             break
         i += 1
     return False
+
+_mrpt_num_trials = 5
+def is_probable_prime(n):
+    assert n >= 2
+    # special case 2
+    if n == 2:
+        return True
+    # ensure n is odd
+    if n % 2 == 0:
+        return False
+    # write n-1 as 2**s * d
+    # repeatedly try to divide n-1 by 2
+    s = 0
+    d = n - 1
+    while True:
+        quotient, remainder = divmod(d, 2)
+        if remainder == 1:
+            break
+        s += 1
+        d = quotient
+    assert (2 ** s * d == n - 1)
+
+    # test the base a to see whether it is a witness for the compositeness of n
+    def try_composite(a):
+        if pow(a, d, n) == 1:
+            return False
+        for i in range(s):
+            if pow(a, 2 ** i * d, n) == n - 1:
+                return False
+        return True  # n is definitely composite
+
+    for i in range(_mrpt_num_trials):
+        a = random.randrange(2, n)
+        if try_composite(a):
+            return False
+
+    return True  # no base tested showed n as composite
