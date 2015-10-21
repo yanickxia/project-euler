@@ -147,7 +147,10 @@ def is_dived_by_primes(n: int, primes: list, counters: int):
         i += 1
     return False
 
+
 _mrpt_num_trials = 5
+
+
 def is_probable_prime(n):
     assert n >= 2
     # special case 2
@@ -183,3 +186,15 @@ def is_probable_prime(n):
             return False
 
     return True  # no base tested showed n as composite
+
+
+def prime_factorization(n:int, primes:list):
+    prime_factor = set()
+    for prime in primes:
+        while n % prime == 0:
+            prime_factor.add(prime)
+            n = int(n / prime)
+
+        if prime > n:
+            break
+    return prime_factor
