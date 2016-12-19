@@ -2,6 +2,8 @@ __author__ = 'Yann'
 
 import random
 
+primes_numbers_before_10000th = []
+
 
 def is_prime_slow(n):
     if n == 2 or n == 3: return True
@@ -188,7 +190,7 @@ def is_probable_prime(n):
     return True  # no base tested showed n as composite
 
 
-def prime_factorization(n:int, primes:list):
+def prime_factorization(n: int, primes: list):
     prime_factor = set()
     for prime in primes:
         while n % prime == 0:
@@ -198,3 +200,15 @@ def prime_factorization(n:int, primes:list):
         if prime > n:
             break
     return prime_factor
+
+
+def is_prime_must_before_104729(x: int):
+    if len(primes_numbers_before_10000th) == 0:
+        f = open("../numbers/10000.txt")
+        for line in f.readlines():
+            for n in line.replace("\n", "").split(" "):
+                n = n.replace(" ", "")
+                if n != '':
+                    primes_numbers_before_10000th.append(int(n))
+
+    return x in primes_numbers_before_10000th
