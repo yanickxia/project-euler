@@ -154,7 +154,8 @@ _mrpt_num_trials = 5
 
 
 def is_probable_prime(n):
-    assert n >= 2
+    if n < 2:
+        return False
     # special case 2
     if n == 2:
         return True
